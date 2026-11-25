@@ -1,0 +1,18 @@
+flowchart TD
+    A[Arc String-ID Root] --> B[Vault Profile]
+    B --> C[Encrypted Data Vault]
+    B --> D[Data & IP Registry]
+    B --> E[Digital Asset Portfolio]
+    B --> F[Recovery & Access]
+
+    F --> G[Passkey Authentication]
+    F --> H[Recovery Key]
+    F --> I[Legacy V1 Recovery]
+
+    G --> J[Vault Unlock]
+    H --> J
+    I --> J
+
+    J --> K[Restore Profile]
+    J --> L[Restore Records]
+    J --> M[Restore Asset References]
