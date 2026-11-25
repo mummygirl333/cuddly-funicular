@@ -1,0 +1,25 @@
+Arc String-ID Vault
+│
+├── identity/
+│   └── string-id-profile
+│
+├── registry/
+│   ├── data-ip-records
+│   └── asset-registry
+│
+├── vault/
+│   ├── vault-storage
+│   ├── vault-encryption
+│   ├── vault-unlock
+│   └── vault-profile
+│
+├── recovery/
+│   ├── recovery-v2
+│   ├── recovery-v1-legacy
+│   ├── passkey-recovery
+│   └── recovery-export
+│
+└── portfolio/
+    ├── asset-links
+    ├── contribution-history
+    └── claims-and-revenue
