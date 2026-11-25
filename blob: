@@ -1,0 +1,33 @@
+  blob: Blob,
+  recoveryKey: string,
+): Promise<{ profile: Profile; key: CryptoKey; file: DecryptedFile }> {
+  const { header, cipher } = await parseV2(blob)
+  const key = await unwrap(header.recovery, recoveryKey)
+  const file = await open(header, cipher, key)
+  const profile: Profile = {
+    v: 2,
+    recovery: header.recovery,
+    passkey: header.passkey,
+    credentialId: header.credentialId,
+    prfSalt: header.prfSalt,
+  }
+  return { profile, key, file }
+}
+
+/** Older single-passphrase copies (IPV1). */
+export async function decryptLegacyCopy(encrypted: Blob, passphrase: string): Promise<DecryptedFile> {
+  const data = new Uint8Array(await encrypted.arrayBuffer())
+  const headerLength = MAGIC_V1.length + SALT_BYTES + IV_BYTES
+  if ((await copyFormat(encrypted)) !== 'v1' || data.length <= headerLength) {
+    throw new VaultError('This is not an encrypted vault copy.')
+  }
+  const salt = new Uint8Array(data.slice(MAGIC_V1.length, MAGIC_V1.length + SALT_BYTES))
+  const iv = new Uint8Array(data.slice(MAGIC_V1.length + SALT_BYTES, headerLength))
+  const cipher = new Uint8Array(data.slice(headerLength))
+  try {
+    const key = await deriveKey(passphrase, salt)
+    return await unpack(new Uint8Array(await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, cipher)))
+  } catch {
+    throw new VaultError('Wrong passphrase, or the copy is damaged.')
+  }
+}
