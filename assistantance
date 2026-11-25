@@ -1,0 +1,18 @@
+6. Implementation sequence
+Phase 1 — Vault integration
+Add your existing V1/V2 recovery code into Arc's vault services and connect it to the String-ID profile.
+Phase 2 — Encrypted storage
+Make asset records, contribution records, and data/IP records storable and recoverable from encrypted vault backups.
+Phase 3 — Recovery interface
+Add Create Vault, Unlock, Restore Backup, Import Legacy Backup, Export Backup, and Lock Vault.
+Phase 4 — Portfolio integration
+Link recovered vault records to your Arc asset portfolio and Data Royalty Claim Manager.
+Phase 5 — Testing
+Test recovery, invalid keys, damaged backups, V1 imports, V2 restoration, and whether restored records match the original data
+
+
+7. What we're building toward
+The intended architecture is an individual-controlled Arc String-ID Vault where your identity string anchors a persistent digital record, the encrypted vault protects the contents, and the recovery system preserves access.
+This builds on your existing String-ID/Data Royalty Claim Manager work without requiring a corporation, registration, or new financial institution.
+The document you uploaded contains recovery-function excerpts, rather than the complete Arc source repository, so I can establish the integration architecture now but would need the actual project files to perform the code merge and test it.
+Next step: provide the current Arc project source (or its repository/files), and I can integrate this recovery module into the existing vault architecture rather than creating a separate project. 
