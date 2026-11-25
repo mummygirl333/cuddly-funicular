@@ -1,0 +1,21 @@
+interface ArcVaultService {
+  createVault(stringId: string): Promise<VaultProfile>;
+
+  unlockVault(
+    credential: VaultCredential
+  ): Promise<UnlockedVault>;
+
+  recoverVault(
+    encryptedBackup: Blob,
+    recoveryKey: string
+  ): Promise<RestoredVault>;
+
+  importLegacyBackup(
+    encryptedBackup: Blob,
+    passphrase: string
+  ): Promise<RestoredVault>;
+
+  exportEncryptedBackup(): Promise<Blob>;
+
+  lockVault(): Promise<void>;
+}
